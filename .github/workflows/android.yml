@@ -22,14 +22,14 @@ jobs:
       - name: Grant execute permission for graldew
         run: cd android && chmod +x ./gradlew
 
-      - name: Build wite Gradlew
-        run: cd android && ./gradlew clean bundleRelease
-
-      - name: Check AAB File
-        run: cd ./android/app/build/outputs/bundle/release && ls -al
+      - name: Build Gradlew
+        run: cd android && ./gradlew build
+      
+      - name: Build bundleRelease
+        run: cd android && ./gradlew bundleRelease
 
       - name: Sign Release
-        uses: r0adkll/sign-android-release@fix/bundle-signing
+        uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: ./android/app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
