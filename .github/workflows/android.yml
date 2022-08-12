@@ -29,13 +29,13 @@ jobs:
         run: cd android && ./gradlew bundleRelease
 
       - name: Sign Release
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: ./android/app/build/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }} 
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        run: jarsigner -keystore android/app/swat.jks -storepass ${{ secrets.KEY_STORE_PASSWORD }} -keypass ${{ secrets.KEY_PASSWORD }} android/app/build/outputs/bundle/release/app-release.aab ${{ secrets.ALIAS }} 
+        # with:
+        #   releaseDirectory: ./android/app/build/outputs/bundle/release
+        #   signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+        #   alias: ${{ secrets.ALIAS }} 
+        #   keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        #   keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       # - name: Upload Apk to Slack
       #   env: 
